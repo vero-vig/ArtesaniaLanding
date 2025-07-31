@@ -59,6 +59,52 @@ if (existsSync(indexPath)) {
 console.log('📄 Creating .nojekyll file...');
 writeFileSync('docs/.nojekyll', '');
 
+// Create 404.html for SPA routing (GitHub Pages will serve this for missing routes)
+console.log('🔄 Creating 404.html for SPA routing...');
+let spa404Content = readFileSync('docs/index.html', 'utf-8');
+
+// Add SPA redirect script to handle GitHub Pages routing
+const redirectScript = `
+<script>
+  // Single Page Apps for GitHub Pages
+  // https://github.com/rafgraph/spa-github-pages
+  (function(l) {
+    if (l.search[1] === '/' ) {
+      var decoded = l.search.slice(1).split('&').map(function(s) { 
+        return s.replace(/~and~/g, '&')
+      }).join('?');
+      window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+      );
+    }
+  }(window.location))
+</script>`;
+
+// Insert the script before closing head tag
+spa404Content = spa404Content.replace('</head>', redirectScript + '\n</head>');
+writeFileSync('docs/404.html', spa404Content);
+
+// Also add the redirect handling to the main index.html
+console.log('🔄 Adding SPA redirect handling to index.html...');
+let mainIndexContent = readFileSync('docs/index.html', 'utf-8');
+const checkScript = `
+<script>
+  // Check if we need to redirect based on GitHub Pages SPA handling
+  (function(l) {
+    if (l.search[1] === '/' ) {
+      var decoded = l.search.slice(1).split('&').map(function(s) { 
+        return s.replace(/~and~/g, '&')
+      }).join('?');
+      window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+      );
+    }
+  }(window.location))
+</script>`;
+
+mainIndexContent = mainIndexContent.replace('</head>', checkScript + '\n</head>');
+writeFileSync('docs/index.html', mainIndexContent);
+
 console.log('✅ Static site built successfully!');
 console.log('📂 Files are ready in the "docs" directory for GitHub Pages');
 console.log('📝 Configure GitHub Pages to serve from "docs" folder');
