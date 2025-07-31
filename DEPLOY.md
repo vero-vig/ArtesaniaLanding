@@ -51,14 +51,23 @@ jobs:
 
 1. Ve a la configuración de tu repositorio en GitHub
 2. Scroll hasta la sección "Pages"
-3. En "Source", selecciona "Deploy from a branch"
-4. Selecciona la rama `main` (o la rama donde tengas el código)
-5. Selecciona la carpeta `/docs`
+3. **IMPORTANTE**: En "Source", selecciona "GitHub Actions" (NO "Deploy from a branch")
+4. El workflow automáticamente detectará y desplegará tu sitio
+
+### 3. Configurar Permisos (Si hay errores)
+
+Si el despliegue falla por permisos:
+
+1. Ve a Settings → Actions → General
+2. En "Workflow permissions", selecciona "Read and write permissions"
+3. Marca "Allow GitHub Actions to create and approve pull requests"
+4. Guarda los cambios
 
 **Nota**: El script automáticamente:
 - Convierte las rutas absolutas a relativas para GitHub Pages
 - Elimina scripts de desarrollo
 - Crea el archivo `.nojekyll` necesario
+- Usa el método moderno de GitHub Actions (no la rama gh-pages)
 
 ## Opción 2: Despliegue Manual
 
