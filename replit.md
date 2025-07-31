@@ -2,6 +2,12 @@
 
 This is a full-stack web application for an artisan crafts business built with React, Express.js, and PostgreSQL. The application serves as a showcase website for handmade crafts with a contact form system that allows potential customers to inquire about products. The frontend features a modern, responsive design with smooth scrolling navigation, product gallery, about section, and contact functionality. The backend provides REST API endpoints for handling contact form submissions and message management.
 
+## Recent Updates (January 2025)
+- **Static Site Generation**: Added build-static.js script for GitHub Pages deployment
+- **SEO Optimization**: Enhanced HTML meta tags with Open Graph and Twitter cards
+- **GitHub Actions**: Created automated deployment workflow for GitHub Pages
+- **Deployment Ready**: Project configured for static hosting on GitHub Pages, Netlify, or Vercel
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -62,3 +68,6 @@ Preferred communication style: Simple, everyday language.
 - **Static Assets**: Vite-built frontend served by Express in production
 - **Environment**: Configured for Node.js production deployment
 - **Database**: Serverless PostgreSQL via Neon with environment-based configuration
+- **GitHub Pages**: Automated deployment using GitHub Actions workflow
+- **Static Build**: Custom build-static.js script generates deployable files in docs/ folder
+- **SEO Ready**: Optimized HTML with meta tags, Open Graph, and Twitter cards for better social sharing
