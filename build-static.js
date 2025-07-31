@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { copyFileSync, mkdirSync, existsSync, readdirSync, statSync, rmSync } from 'fs';
+import { copyFileSync, mkdirSync, existsSync, readdirSync, statSync, rmSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 
 console.log('🚀 Building static site for GitHub Pages...');
@@ -39,10 +39,25 @@ const copyRecursively = (src, dest) => {
 // Copy all built files to docs
 copyRecursively('dist/public', 'docs');
 
-// Copy the root index.html to docs
-if (existsSync('index.html')) {
-  copyFileSync('index.html', 'docs/index.html');
+// Fix index.html paths for GitHub Pages
+console.log('🔧 Fixing asset paths for GitHub Pages...');
+const indexPath = 'docs/index.html';
+if (existsSync(indexPath)) {
+  let indexContent = readFileSync(indexPath, 'utf-8');
+  
+  // Replace absolute paths with relative paths
+  indexContent = indexContent.replace(/src="\/assets\//g, 'src="./assets/');
+  indexContent = indexContent.replace(/href="\/assets\//g, 'href="./assets/');
+  
+  // Remove the replit dev banner for production
+  indexContent = indexContent.replace(/<script type="text\/javascript" src="https:\/\/replit\.com\/public\/js\/replit-dev-banner\.js"><\/script>/g, '');
+  
+  writeFileSync(indexPath, indexContent);
 }
+
+// Create .nojekyll file for GitHub Pages
+console.log('📄 Creating .nojekyll file...');
+writeFileSync('docs/.nojekyll', '');
 
 console.log('✅ Static site built successfully!');
 console.log('📂 Files are ready in the "docs" directory for GitHub Pages');

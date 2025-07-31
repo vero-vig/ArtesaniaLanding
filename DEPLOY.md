@@ -52,8 +52,13 @@ jobs:
 1. Ve a la configuración de tu repositorio en GitHub
 2. Scroll hasta la sección "Pages"
 3. En "Source", selecciona "Deploy from a branch"
-4. Selecciona la rama `gh-pages`
-5. Selecciona la carpeta `/ (root)`
+4. Selecciona la rama `main` (o la rama donde tengas el código)
+5. Selecciona la carpeta `/docs`
+
+**Nota**: El script automáticamente:
+- Convierte las rutas absolutas a relativas para GitHub Pages
+- Elimina scripts de desarrollo
+- Crea el archivo `.nojekyll` necesario
 
 ## Opción 2: Despliegue Manual
 
